@@ -49,31 +49,25 @@ jobs:
             do echo $repo;
                 github-to-sqlite releases \
                     github.db $(echo $repo | tr -d '\r');
-                sleep 10;
+                sleep 10;echo releases;
                 github-to-sqlite commits \
                     github.db $(echo $repo | tr -d '\r');
-                sleep 10;
+                sleep 10; echo commits;
                 github-to-sqlite tags \
                     github.db $(echo $repo | tr -d '\r');
-                sleep 10;
+                sleep 10; echo tags; 
                 github-to-sqlite contributors \
                     github.db $(echo $repo | tr -d '\r');
-                sleep 10;
+                sleep 10; echo repo; 
                 github-to-sqlite issues \
                     github.db $(echo $repo | tr -d '\r');
-                sleep 10;
+                sleep 10; echo issues;
                 github-to-sqlite pull-requests \
                     github.db $(echo $repo | tr -d '\r');
-                sleep 10;
-                github-to-sqlite issue-comments \
-                    github.db $(echo $repo | tr -d '\r');
-                sleep 10;
+                sleep 10; echo pr;
                 github-to-sqlite stargazers \
                     github.db $(echo $repo | tr -d '\r');
-                sleep 10;
-                github-to-sqlite workflows \
-                    github.db $(echo $repo | tr -d '\r');
-                sleep 10;
+                sleep 10; echo starg; 
             done;
         # Scrape dependents
         github-to-sqlite scrape-dependents github.db WorldHealthOrganization/app -v
