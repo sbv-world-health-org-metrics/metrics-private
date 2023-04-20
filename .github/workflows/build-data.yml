@@ -46,7 +46,8 @@ jobs:
       run: |-
         sqlite-utils github.db "select full_name from repos where owner = 129098699 union select 'sbv-world-health-org-metrics/linux' as full_name" \
           --csv --no-headers | while read repo;
-            do github-to-sqlite releases \
+            do echo $repo;
+                github-to-sqlite releases \
                     github.db $(echo $repo | tr -d '\r');
                 sleep 10;
                 github-to-sqlite commits \
