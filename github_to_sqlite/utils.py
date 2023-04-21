@@ -294,6 +294,7 @@ def save_issue_comment(db, comment):
 
 def fetch_repo(full_name, token=None):
     headers = make_headers(token)
+    time.sleep(0.01)
     # Get topics:
     headers["Accept"] = "application/vnd.github.mercy-preview+json"
     owner, slug = full_name.split("/")
@@ -344,6 +345,7 @@ def save_license(db, license):
 
 
 def fetch_issues(repo, token=None, issue_ids=None):
+    time.sleep(0.01)
     headers = make_headers(token)
     headers["accept"] = "application/vnd.github.v3+json"
     if issue_ids:
@@ -359,6 +361,7 @@ def fetch_issues(repo, token=None, issue_ids=None):
 
 
 def fetch_pull_requests(repo, token=None, pull_request_ids=None):
+    time.sleep(0.01)
     headers = make_headers(token)
     headers["accept"] = "application/vnd.github.v3+json"
     if pull_request_ids:
@@ -376,6 +379,7 @@ def fetch_pull_requests(repo, token=None, pull_request_ids=None):
 
 
 def fetch_issue_comments(repo, token=None, issue=None):
+    time.sleep(0.01)
     assert "/" in repo
     headers = make_headers(token)
     # Get reactions:
@@ -389,6 +393,7 @@ def fetch_issue_comments(repo, token=None, issue=None):
 
 
 def fetch_releases(repo, token=None):
+    time.sleep(0.01)
     headers = make_headers(token)
     url = "https://api.github.com/repos/{}/releases".format(repo)
     for releases in paginate(url, headers):
@@ -396,6 +401,7 @@ def fetch_releases(repo, token=None):
 
 
 def fetch_contributors(repo, token=None):
+    time.sleep(0.01)
     headers = make_headers(token)
     url = "https://api.github.com/repos/{}/contributors".format(repo)
     for contributors in paginate(url, headers):
@@ -403,6 +409,7 @@ def fetch_contributors(repo, token=None):
 
 
 def fetch_tags(repo, token=None):
+    time.sleep(0.01)
     headers = make_headers(token)
     url = "https://api.github.com/repos/{}/tags".format(repo)
     for tags in paginate(url, headers):
@@ -410,6 +417,7 @@ def fetch_tags(repo, token=None):
 
 
 def fetch_commits(repo, token=None, stop_when=None):
+    time.sleep(0.01)
     if stop_when is None:
         stop_when = lambda commit: False
     headers = make_headers(token)
@@ -426,6 +434,7 @@ def fetch_commits(repo, token=None, stop_when=None):
 
 
 def fetch_all_starred(username=None, token=None):
+    time.sleep(0.01)
     assert username or token, "Must provide username= or token= or both"
     headers = make_headers(token)
     headers["Accept"] = "application/vnd.github.v3.star+json"
@@ -438,6 +447,7 @@ def fetch_all_starred(username=None, token=None):
 
 
 def fetch_stargazers(repo, token=None):
+    time.sleep(0.01)
     headers = make_headers(token)
     headers["Accept"] = "application/vnd.github.v3.star+json"
     url = "https://api.github.com/repos/{}/stargazers".format(repo)
@@ -446,6 +456,7 @@ def fetch_stargazers(repo, token=None):
 
 
 def fetch_all_repos(username=None, token=None):
+    time.sleep(0.01)
     assert username or token, "Must provide username= or token= or both"
     headers = make_headers(token)
     # Get topics for each repo:
@@ -459,6 +470,7 @@ def fetch_all_repos(username=None, token=None):
 
 
 def fetch_user(username=None, token=None):
+    time.sleep(0.01)
     assert username or token, "Must provide username= or token= or both"
     headers = make_headers(token)
     if username:
@@ -716,7 +728,8 @@ def ensure_db_shape(db):
 def scrape_dependents(repo, verbose=False):
     # Optional dependency:
     from bs4 import BeautifulSoup
-
+    time.sleep(0.01) 
+    
     url = "https://github.com/{}/network/dependents".format(repo)
     while url:
         if verbose:
@@ -743,6 +756,7 @@ def scrape_dependents(repo, verbose=False):
 
 
 def fetch_emojis(token=None):
+    time.sleep(0.01)
     headers = make_headers(token)
     response = requests.get("https://api.github.com/emojis", headers=headers)
     response.raise_for_status()
@@ -754,6 +768,7 @@ def fetch_image(url):
 
 
 def get(url, token=None, accept=None):
+    time.sleep(0.01)
     headers = make_headers(token)
     if accept:
         headers["accept"] = accept
@@ -799,6 +814,7 @@ def rewrite_readme_html(html):
 
 
 def fetch_workflows(token, full_name):
+    time.sleep(0.01)
     headers = make_headers(token)
     url = "https://api.github.com/repos/{}/contents/.github/workflows".format(full_name)
     response = requests.get(url, headers=headers)
