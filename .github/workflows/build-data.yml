@@ -84,19 +84,18 @@ jobs:
         #echo analyze;
         #sqlite-utils analyze-tables github.db --save
         echo uploading
-        
     - uses: actions/upload-artifact@v3
       with:
-        name: database
         path: github.db
+        
     # Setup node first
-      - name: Setup node
-        uses: actions/setup-node@v1
-      - name: Upload to GitHub
-        uses: LasyIsLazy/github-upload-action@v0.1.0
-        with:
-          access-token: ${{ secrets.ACCESS_TOKEN }}
-          file-path: github.db
-          owner: sbv-world-health-org-metrics
-          repo: metrics-private
-          remote-dir: sampledata/WorldHealthOrganization
+    - name: Setup node
+      uses: actions/setup-node@v1
+    - name: Upload to GitHub
+      uses: LasyIsLazy/github-upload-action@v0.1.0
+      with:
+         access-token: ${{ secrets.ACCESS_TOKEN }}
+         file-path: github.db
+         owner: sbv-world-health-org-metrics
+         repo: metrics-private
+         remote-dir: sampledata/WorldHealthOrganization
