@@ -94,8 +94,10 @@ jobs:
     - name: Upload to GitHub
       uses: LasyIsLazy/github-upload-action@v0.1.0
       with:
+         branch-name: update-db
          access-token: ${{ secrets.ACCESS_TOKEN }}
          file-path: github.db
          owner: sbv-world-health-org-metrics
          repo: metrics-private
          remote-dir: sampledata/WorldHealthOrganization
+         commit-message: updating database
