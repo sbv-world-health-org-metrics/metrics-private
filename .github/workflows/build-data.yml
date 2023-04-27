@@ -88,9 +88,14 @@ jobs:
       with:
         name: database
         path: github.db
-    - uses: actions/download-artifact@v3
-      with:
-        name: database
-        path: github.db
-    - name: 'Echo download path'
-      run: echo ${{steps.download.outputs.download-path}}
+    # Setup node first
+      - name: Setup node
+        uses: actions/setup-node@v1
+      - name: Upload to GitHub
+        uses: LasyIsLazy/github-upload-action@v0.1.0
+        with:
+          access-token: ${{ secrets.ACCESS_TOKEN }}
+          file-path: github.db
+          owner: sbv-world-health-org-metrics
+          repo: metrics-private
+          remote-dir: sampledata/WorldHealthOrganization
