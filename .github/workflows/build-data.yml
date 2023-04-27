@@ -84,6 +84,7 @@ jobs:
         #echo analyze;
         #sqlite-utils analyze-tables github.db --save
         echo uploading
+        
     - uses: actions/upload-artifact@v3
       with:
         name: database
