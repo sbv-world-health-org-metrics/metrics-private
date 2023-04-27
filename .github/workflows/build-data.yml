@@ -44,7 +44,7 @@ jobs:
         sqlite-utils tables --counts github.db
     - name: Fetch releases, commits, issues, contributors
       run: |-
-        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name" \
+        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 2" \
           --csv --no-headers | while read repo;
             do echo $repo;
                 github-to-sqlite releases \
@@ -86,4 +86,11 @@ jobs:
         echo uploading
     - uses: actions/upload-artifact@v3
       with:
+        name: database
         path: github.db
+    - uses: actions/download-artifact@v3
+      with:
+        name: database
+        path: github.db
+    - name: 'Echo download path'
+      run: echo ${{steps.download.outputs.download-path}}
