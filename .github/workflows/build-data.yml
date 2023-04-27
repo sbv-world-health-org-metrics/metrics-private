@@ -88,6 +88,10 @@ jobs:
       with:
         path: github.db
         
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"    
+      
     # Setup node first
     - name: Setup node
       uses: actions/setup-node@v1
@@ -100,4 +104,4 @@ jobs:
          owner: sbv-world-health-org-metrics
          repo: metrics-private
          remote-dir: sampledata/WorldHealthOrganization
-         commit-message: updating database
+         commit-message: updating database-${{ steps.date.outputs.date }}
