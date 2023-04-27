@@ -88,7 +88,9 @@ jobs:
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"    
-      
+    
+    - name: Create zip file
+      run: zip -q database.zip github.db      
     # Setup node first
     - name: Setup node
       uses: actions/setup-node@v1
@@ -97,7 +99,7 @@ jobs:
       with:
          branch-name: update-db-${{ steps.date.outputs.date }}
          access-token: ${{ secrets.ACCESS_TOKEN }}
-         file-path: github.db
+         file-path: database.zip
          owner: sbv-world-health-org-metrics
          repo: metrics-private
          remote-dir: sampledata/WorldHealthOrganization/${{ steps.date.outputs.date }}
