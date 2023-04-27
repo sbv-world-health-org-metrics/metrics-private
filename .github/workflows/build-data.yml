@@ -44,7 +44,7 @@ jobs:
         sqlite-utils tables --counts github.db
     - name: Fetch releases, commits, issues, contributors
       run: |-
-        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 2" \
+        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name" \
           --csv --no-headers | while read repo;
             do echo $repo;
                 github-to-sqlite releases \
@@ -103,5 +103,5 @@ jobs:
          file-path: github.db
          owner: sbv-world-health-org-metrics
          repo: metrics-private
-         remote-dir: sampledata/WorldHealthOrganization/-${{ steps.date.outputs.date }}
+         remote-dir: sampledata/WorldHealthOrganization/${{ steps.date.outputs.date }}
          commit-message: updating database-${{ steps.date.outputs.date }}
