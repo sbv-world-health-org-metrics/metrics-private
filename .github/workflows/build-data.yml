@@ -93,6 +93,12 @@ jobs:
       run: |
          zip -9 -q database.zip github.db
          ls -la
+  upload:
+    runs-on: ubuntu-latest
+    needs: scheduled
+
+    steps:
+    - uses: actions/checkout@v3
     # Setup node first
     - name: Setup node
       uses: actions/setup-node@v1
