@@ -41,7 +41,7 @@ jobs:
         sqlite-utils tables --counts github.db
     - name: Fetch releases, commits, issues, contributors
       run: |-
-        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 1" \
+        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 2" \
           --csv --no-headers | while read repo;
             do echo $repo;
                 github-to-sqlite releases \
@@ -91,7 +91,7 @@ jobs:
     
     - name: Create zip file
       run: |
-         zip -q database.zip github.db
+         zip -r -s 1m -q database.zip github.db
          ls -la
     # Setup node first
     - name: Setup node
@@ -101,7 +101,7 @@ jobs:
       with:
          branch-name: update-db-${{ steps.date.outputs.date }}
          access-token: ${{ secrets.ACCESS_TOKEN }}
-         file-path: database.zip
+         file-path: database.*
          owner: sbv-world-health-org-metrics
          repo: metrics-private
          remote-dir: sampledata/WorldHealthOrganization/${{ steps.date.outputs.date }}
