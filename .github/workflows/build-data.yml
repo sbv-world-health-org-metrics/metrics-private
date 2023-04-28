@@ -110,7 +110,7 @@ jobs:
       with:
          branch-name: main
          access-token: ${{ secrets.ACCESS_TOKEN }}
-         file-path: database.zip
+         file-path: /home/runner/work/metrics-private/metrics-private/github.db/artifact
          owner: sbv-world-health-org-metrics
          repo: metrics-private
          remote-dir: sampledata/WorldHealthOrganization
