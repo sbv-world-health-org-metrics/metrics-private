@@ -39,10 +39,10 @@ jobs:
       run: |-
         github-to-sqlite repos github.db WorldHealthOrganization
         sqlite-utils tables --counts github.db
-    - name: Fetch releases, commits, issues, contributors
+    - name: Fetch users and grab more data
       run: |-
         sqlite-utils github.db "select login from users" \
-          --csv --no-headers | while read users;
-            do echo $users;
+          --csv --no-headers | while read users1;
+            do echo "User:" $users1;
             done;
       
