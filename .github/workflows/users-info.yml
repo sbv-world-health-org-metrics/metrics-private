@@ -46,7 +46,6 @@ jobs:
             do echo $repo;
                 github-to-sqlite contributors \
                     github.db $(echo $repo | tr -d '\r');
-                sleep 1; echo contributors
             done;
         sqlite-utils github.db "select login from users" \
           --csv --no-headers | while read users1;
