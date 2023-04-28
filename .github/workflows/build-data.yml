@@ -41,7 +41,7 @@ jobs:
         sqlite-utils tables --counts github.db
     - name: Fetch releases, commits, issues, contributors
       run: |-
-        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name" \
+        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 1" \
           --csv --no-headers | while read repo;
             do echo $repo;
                 github-to-sqlite releases \
@@ -90,7 +90,8 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"    
     
     - name: Create zip file
-      run: zip -q database.zip github.db      
+      run: zip -q database.zip github.db
+      run: ls -la
     # Setup node first
     - name: Setup node
       uses: actions/setup-node@v1
