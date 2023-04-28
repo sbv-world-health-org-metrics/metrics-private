@@ -1,0 +1,48 @@
+name: Grab Users and lookup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 2 * * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      name: Check out repo
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+    - uses: actions/cache@v3
+      name: Configure pip caching
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/setup.py') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install sqlite-utils>=3.1
+        sqlite-utils --version
+        pip install -e .
+        pip install datasette
+        pip install bs4
+    - name: Create auth.json
+      env:
+        GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_WHO }}
+      run: |
+        echo "{\"github_personal_token\": \"$GITHUB_ACCESS_TOKEN\"}" > auth.json
+    - name: Fetch the repos
+      run: |-
+        github-to-sqlite repos github.db WorldHealthOrganization
+        sqlite-utils tables --counts github.db
+    - name: Fetch releases, commits, issues, contributors
+      run: |-
+        sqlite-utils github.db "select login from users" \
+          --csv --no-headers | while read users;
+            do echo $users;
+            done;
+      
