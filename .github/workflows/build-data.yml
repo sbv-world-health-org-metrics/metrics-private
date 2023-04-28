@@ -90,8 +90,9 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"    
     
     - name: Create zip file
-      run: zip -q database.zip github.db
-      run: ls -la
+      run: |
+         zip -q database.zip github.db
+         ls -la
     # Setup node first
     - name: Setup node
       uses: actions/setup-node@v1
