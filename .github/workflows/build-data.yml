@@ -104,5 +104,5 @@ jobs:
       - uses: fixpoint/azblob-upload-artifact@v4
         with:
           connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-          name: who-${{ steps.date.outputs.date }}
+          name: WHO-${{ steps.date.outputs.date }}
           path: /home/runner/work/metrics-private/metrics-private/github.db/artifact  
