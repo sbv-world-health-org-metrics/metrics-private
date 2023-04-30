@@ -7,10 +7,10 @@ from sgqlc.endpoint.http import HTTPEndpoint
 try:
     token, repo = sys.argv[1:]
 except ValueError:
-    raise SystemExit('Usage: <token> <Organization/user>')
+    raise SystemExit('Usage: <token> <user>')
 
 query = '''
-query UserInfo($repoOwner: String!, $UserName: String!){
+query UserInfo($UserName: String!){
   user(login: $UserName) {
     login
     name
@@ -20,14 +20,13 @@ query UserInfo($repoOwner: String!, $UserName: String!){
     twitterUsername
     websiteUrl
     url
-    organizationVerifiedDomainEmails(login: $repoOwner)
+    organizationVerifiedDomainEmails(login: world-health-organization)
   }
 }
 '''
 
-owner, name = repo.split('/', 1)
+name = repo
 variables = {
-    'repoOwner': owner,
     'UserName': name,
 }
 
