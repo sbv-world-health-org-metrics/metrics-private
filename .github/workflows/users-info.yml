@@ -53,6 +53,6 @@ jobs:
             done;
         sqlite-utils github.db "select login from users" \
           --csv --no-headers | while read users1;
-            do python3 users.py $GITHUB_ACCESS_TOKEN1 $users1;
+            do echo users.py $GITHUB_ACCESS_TOKEN1 $users1;
             done;            
             
