@@ -29,6 +29,7 @@ jobs:
         sqlite-utils --version
         pip install -e .
         pip install datasette
+        pip install sgqlc
         pip install bs4
     - name: Create auth.json
       env:
