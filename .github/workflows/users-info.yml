@@ -33,6 +33,9 @@ jobs:
     - name: Create auth.json
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_WHO }}
+        GITHUB_ACCESS_TOKEN1: ${{ secrets.ACCESS_TOKEN }}
+
+
       run: |
         echo "{\"github_personal_token\": \"$GITHUB_ACCESS_TOKEN\"}" > auth.json
     - name: Fetch the repos
@@ -41,7 +44,7 @@ jobs:
         sqlite-utils tables --counts github.db
     - name: Fetch users and grab more data
       run: |-
-        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name" \
+        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 1" \
           --csv --no-headers | while read repo;
             do echo $repo;
                 github-to-sqlite contributors \
@@ -49,6 +52,6 @@ jobs:
             done;
         sqlite-utils github.db "select login from users" \
           --csv --no-headers | while read users1;
-            do echo "User:" $users1;
+            do python3 users.py $GITHUB_ACCESS_TOKEN1 $users1;
             done;            
             
