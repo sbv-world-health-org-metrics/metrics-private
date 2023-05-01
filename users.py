@@ -20,7 +20,7 @@ query UserInfo($UserName: String!){
     twitterUsername
     websiteUrl
     url
-    organizationVerifiedDomainEmails(login: world-health-organization)
+    organizationVerifiedDomainEmails(login: "world-health-organization")
   }
 }
 '''
