@@ -44,24 +44,16 @@ jobs:
         sqlite-utils tables --counts github.db
     - name: Fetch users and grab more data
       env:
-        GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_WHO }}
+        GITHUB_ACCESS_TOKEN1: ${{ secrets.ACCESS_TOKEN_WHO }}
       run: |-
-        echo "{\"github_personal_token\": \"$GITHUB_ACCESS_TOKEN\"}" > auth.json
-        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 10" \
+        sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 4" \
           --csv --no-headers | while read repo;
             do echo $repo;
-                echo "!!" $repo 
                 github-to-sqlite contributors \
                     github.db $(echo $repo | tr -d '\r');
             done;
-        echo "[" >> users.json    
         sqlite-utils github.db "select login from users" \
           --csv --no-headers | while read users1;
-            do python3 users.py $GITHUB_ACCESS_TOKEN $users1; >> users.json
-               echo ","  >> users.json
-            done;   
-        echo "]" >> users.json    
-    - uses: actions/upload-artifact@v3
-      with:
-        path: users.json
+            do echo users.py $GITHUB_ACCESS_TOKEN1 $users1;
+            done;            
             
