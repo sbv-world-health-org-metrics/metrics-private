@@ -57,7 +57,9 @@ jobs:
           --csv --no-headers | while read users1;
             do python3 users.py $GITHUB_ACCESS_TOKEN $users1 >> users.json; 
                echo ","  >> users.json
-            done;   
+            done;
+        ## remove comma from last line    
+        sed -i '$ d' users.json    
         echo "]" >> users.json    
     - uses: actions/upload-artifact@v3
       with:
