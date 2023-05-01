@@ -49,6 +49,7 @@ jobs:
         sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 10" \
           --csv --no-headers | while read repo;
             do echo $repo;
+                echo "!!" $repo 
                 github-to-sqlite contributors \
                     github.db $(echo $repo | tr -d '\r');
             done;
