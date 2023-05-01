@@ -25,7 +25,7 @@ query UserInfo($UserName: String!){
 }
 '''
 
-name = repo
+name = repo.replace('\r', '')
 variables = {
     'UserName': name,
 }
