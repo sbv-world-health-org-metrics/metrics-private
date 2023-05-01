@@ -12,14 +12,16 @@ except ValueError:
 query = '''
 query UserInfo($UserName: String!){
   user(login: $UserName) {
-    login
-    name
-    location
-    email
-    company
-    twitterUsername
-    websiteUrl
-    url
+            login
+            name 
+            email
+            location
+            company
+            twitterUsername
+            url
+            websiteUrl
+            isDeveloperProgramMember
+            avatarUrl
   }
 }
 '''
