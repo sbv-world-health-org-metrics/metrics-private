@@ -44,7 +44,7 @@ jobs:
         sqlite-utils tables --counts github.db
     - name: Fetch users and grab more data
       env:
-        GITHUB_ACCESS_TOKEN1: ${{ secrets.ACCESS_TOKEN_WHO }}
+        GITHUB_ACCESS_TOKEN1: ${{ secrets.ACCESS_TOKEN }}
       run: |-
         sqlite-utils github.db "select full_name from repos where owner = 15090726 union select 'WorldHealthOrganization/app' as full_name union select 'WorldHealthOrganization/open-source-communication-channel' as full_name LIMIT 4" \
           --csv --no-headers | while read repo;
